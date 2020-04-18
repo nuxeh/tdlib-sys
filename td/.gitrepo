@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/tdlib/td
+	branch = master
+	commit = 64dd422b1ee7811dbd7a423c42d603a51215143d
+	parent = 287e11b87abe9a6c893c698442db86987861cab4
+	method = merge
+	cmdver = 0.4.1
