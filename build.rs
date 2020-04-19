@@ -1,8 +1,13 @@
 use cmake;
+use std::env;
+use std::path::PathBuf;
 
 fn main() {
-    let dst = cmake::build("td");
+    let out_path_lib = PathBuf::from(env::var("OUT_DIR").unwrap())
+        .join("lib");
 
-    println!("cargo:rustc-link-search=native={}", dst.display());
-    println!("cargo:rustc-link-lib=static=foo");
+    cmake::build("td");
+
+    println!("cargo:rustc-link-search=native={}", out_path_lib.display());
+    println!("cargo:rustc-link-lib=static=tdjson_static");
 }
