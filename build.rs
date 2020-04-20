@@ -4,17 +4,14 @@ use std::path::PathBuf;
 
 fn main() {
     let dst = PathBuf::from(env::var("OUT_DIR").unwrap());
-    let dst_lib = dst.join("lib");
+
+    // Output is in build since we don't run the install target
+    let dst_build = dst.join("build");
 
     let mut cfg = Config::new("td");
 
     // Trim down targets to only build tdjson_static
-    cfg
-        .no_build_target(true)
-        .build_arg("--target")
-        .build_arg("tdjson_static")
-        .build_arg("--target")
-        .build_arg("install");
+    cfg.build_target("tdjson_static");
 
     if let Some(path) = env::var_os("DEP_OPENSSL_INCLUDE") {
         if let Some(path) = env::split_paths(&path).next() {
@@ -32,6 +29,6 @@ fn main() {
 
     cfg.build();
 
-    println!("cargo:rustc-link-search=native={}", dst_lib.display());
+    println!("cargo:rustc-link-search=native={}", dst_build.display());
     println!("cargo:rustc-link-lib=static=tdjson_static");
 }
