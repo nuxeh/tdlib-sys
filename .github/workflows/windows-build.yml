@@ -18,6 +18,7 @@ jobs:
       run: vcpkg.exe install gperf:x86-windows
 
     - name: Build static
-      run: |
-        echo "::add-path::C:\vcpkg\packages\gperf_x86-windows\tools"
+      env:
+        TDLIB_GPERF_PATH: "C:\vcpkg\packages\gperf_x86-windows\tools"
+      run:
         cargo build -vv --features bundled_deps
