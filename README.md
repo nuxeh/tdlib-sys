@@ -8,4 +8,8 @@
 Rust sys crate for Telegram's [`TDLib`](https://core.telegram.org/tdlib) client
 library.
 
-Requires the `gperf` to be installed to build.
+Requires the `gperf` tool to be installed to build, and the following
+development libraries:
+
+ - `libssl`
+ - `libz`
