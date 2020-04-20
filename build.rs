@@ -8,6 +8,14 @@ fn main() {
 
     let mut cfg = Config::new("td");
 
+    // Trim down targets to only build tdjson_static
+    cfg
+        .no_build_target(true)
+        .build_arg("--target")
+        .build_arg("tdjson_static")
+        .build_arg("--target")
+        .build_arg("install");
+
     if let Some(path) = env::var_os("DEP_OPENSSL_INCLUDE") {
         if let Some(path) = env::split_paths(&path).next() {
             if let Some(path) = path.to_str() {
