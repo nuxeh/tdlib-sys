@@ -13,20 +13,11 @@ fn main() {
     // Trim down targets to only build tdjson_static
     cfg.build_target("tdjson_static");
 
-    if let Some(path) = env::var_os("DEP_OPENSSL_INCLUDE") {
-        if let Some(path) = env::split_paths(&path).next() {
-            if let Some(path) = path.to_str() {
-                if path.len() > 0 {
-                    cfg.define("OPENSSL_INCLUDE_DIR", path);
-                }
-            }
-        }
-    }
+    // Register cargo-built dependecies
+    cfg.register_dep("openssl");
+    cfg.register_dep("z");
 
-    if let Ok(path) = env::var("DEP_Z_INCLUDE") {
-        cfg.define("ZLIB_INCLUDE_DIR", path);
-    }
-
+    // Build
     cfg.build();
 
     println!("cargo:rustc-link-search=native={}", dst_build.display());
