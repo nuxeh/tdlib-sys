@@ -15,7 +15,7 @@ jobs:
         override: true
 
     - name: Install dependencies
-      run: apt install gperf libz3-dev libssl-dev
+      run: sudo apt install gperf libz3-dev libssl-dev
 
     - name: Build
       run: cargo build -vv
