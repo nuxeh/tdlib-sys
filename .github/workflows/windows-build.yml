@@ -19,6 +19,6 @@ jobs:
 
     - name: Build static
       env:
-        TDLIB_GPERF_PATH: "C:\vcpkg\packages\gperf_x86-windows\tools"
+        TDLIB_GPERF_PATH: 'C:\vcpkg\packages\gperf_x86-windows\tools'
       run:
         cargo build -vv --features bundled_deps
