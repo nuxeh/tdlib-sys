@@ -15,7 +15,7 @@ jobs:
         override: true
 
     - name: Install dependencies
-      run: brew install gperf pkg-config openssl
+      run: brew install gperf
 
     - name: Build
       run: cargo build -vv
