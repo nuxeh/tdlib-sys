@@ -1,5 +1,6 @@
 use cmake::Config;
 use std::env;
+use std::fs;
 use std::path::PathBuf;
 
 fn main() {
@@ -32,6 +33,17 @@ fn main() {
     // Build
     cfg.build();
 
+    // Static linking instructions
     println!("cargo:rustc-link-search=native={}", dst_build.display());
     println!("cargo:rustc-link-lib=static=tdjson_static");
+
+    // Expose header to any dependent crates
+    let dst_include = dst.join("include");
+    fs::create_dir_all(&dst_include).unwrap();
+    fs::copy(
+        "td/td/telegram/td_json_client.h",
+        dst.join("include/td_json_client.h")
+    ).unwrap();
+    println!("cargo:root={}", dst.to_str().unwrap());
+    println!("cargo:include={}", dst_include.display());
 }
