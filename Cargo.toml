@@ -3,6 +3,7 @@ name = "tdlib-sys"
 version = "0.1.0"
 authors = ["Ed Cragg <drq.11235@gmail.com>"]
 edition = "2018"
+links = "tdjson"
 
 [build-dependencies]
 cmake = "0.1.42"
