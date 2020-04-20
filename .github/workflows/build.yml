@@ -14,5 +14,8 @@ jobs:
         toolchain: stable
         override: true
 
+    - name: Install dependencies
+      run: apt install gperf libz3-dev libssl-dev
+
     - name: Build
-      run: cargo build --verbose
+      run: cargo build -vv
