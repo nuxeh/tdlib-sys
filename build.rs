@@ -4,6 +4,8 @@ use std::path::PathBuf;
 
 fn main() {
     let dst = PathBuf::from(env::var("OUT_DIR").unwrap());
+    let gperf_path = env::var("TDLIB_GPERF_PATH")
+        .map(PathBuf::from);
 
     // Output is in build since we don't run the install target
     let dst_build = dst.join("build");
@@ -16,6 +18,11 @@ fn main() {
     // Register cargo-built dependecies
     cfg.register_dep("openssl");
     cfg.register_dep("z");
+
+    // Specify path to gperf if specified in the environment
+    if let Ok(path) = gperf_path {
+        cfg.define("GPERF_EXECUTABLE:FILEPATH", path);
+    }
 
     // Build
     cfg.build();
