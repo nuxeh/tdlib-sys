@@ -1,7 +1,7 @@
 use cmake::Config;
 use std::env;
 use std::fs;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 fn main() {
     let dst = PathBuf::from(env::var("OUT_DIR").unwrap());
@@ -37,13 +37,23 @@ fn main() {
     println!("cargo:rustc-link-search=native={}", dst_build.display());
     println!("cargo:rustc-link-lib=static=tdjson_static");
 
-    // Expose header to any dependent crates
-    let dst_include = dst.join("include");
+    export_headers(&dst);
+}
+
+fn export_headers(dst: &Path) {
+    // Expose headers to any dependent crates
+    let dst_include = dst.join("include/td/telegram");
     fs::create_dir_all(&dst_include).unwrap();
+
     fs::copy(
         "td/td/telegram/td_json_client.h",
         dst.join("include/td_json_client.h")
     ).unwrap();
+    fs::copy(
+        dst.join("build/td/telegram/tdjson_export.h"),
+        dst_include.join("tdjson_export.h")
+    ).unwrap();
+
     println!("cargo:root={}", dst.to_str().unwrap());
-    println!("cargo:include={}", dst_include.display());
+    println!("cargo:include={}", dst.join("include").display());
 }

@@ -5,7 +5,7 @@ fn main() {
     let tdlib_header = env::var("DEP_TDJSON_INCLUDE")
         .map(PathBuf::from)
         .expect("Can't access header from environment")
-	.join("tdjson.h");
+	.join("td_json_client.h");
 
     let bindings = bindgen::Builder::default()
         .header(tdlib_header.to_string_lossy())
