@@ -14,8 +14,7 @@ jobs:
         toolchain: stable
         override: true
 
-    - name: Install dependencies
-      run: vcpkg.exe install gperf:x86-windows
-
     - name: Build static
-      run: cargo build -vv --features bundled_deps
+      run: |
+        vcpkg.exe install gperf:x86-windows
+        cargo build -vv --features bundled_deps
