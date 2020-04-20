@@ -22,6 +22,7 @@ cmake = "0.1.42"
 [dependencies]
 libz-sys = "1.0.25"
 openssl-sys = "0.9.55"
+bindgen = "0.53.2"
 
 [features]
 bundled_deps = ["static_zlib", "vendored_openssl"]
