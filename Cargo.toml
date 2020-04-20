@@ -2,8 +2,19 @@
 name = "tdlib-sys"
 version = "0.1.0"
 authors = ["Ed Cragg <drq.11235@gmail.com>"]
+repository = "https://github.com/nuxeh/gperf-sys"
 edition = "2018"
+license = "ISC"
+readme = "README.md"
+build = "build.rs"
 links = "tdjson"
+include = [
+  "build.rs",
+  "Cargo.toml",
+  "COPYING",
+  "README.md",
+  "td/*"
+]
 
 [build-dependencies]
 cmake = "0.1.42"
