@@ -1,0 +1,18 @@
+[package]
+name = "tdlib-bindgen"
+version = "0.1.0"
+authors = ["Ed Cragg <drq.11235@gmail.com>"]
+edition = "2018"
+license = "ISC"
+readme = "README.md"
+build = "build.rs"
+include = [
+  "build.rs",
+  "Cargo.toml",
+  "COPYING",
+  "README.md",
+  "src/*"
+]
+
+[dependencies]
+tdlib-sys = { version = "*", path = "../" }
