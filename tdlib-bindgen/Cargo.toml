@@ -16,3 +16,6 @@ include = [
 
 [dependencies]
 tdlib-sys = { version = "*", path = "../" }
+
+[build-dependencies]
+bindgen = "0.53.2"
