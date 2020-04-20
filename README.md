@@ -12,11 +12,30 @@ Requires the `gperf` tool to be installed to build, and the following
 development libraries:
 
  - `libssl`
- - `libz`
+ - `zlib`
 
-Build tools required:
+Standard build tools are required, and additionally:
 
  - `Cmake`
+
+All build instructions below for OSX and Windows are currently only tested on
+Github workflows, if you find something more accurate for a normal system,
+please feel free to send a PR!
+
+## Dynamically linked builds
+
+### Get source
+
+    git clone https://github.com/nuxeh/tdlib-sys.git
+    cd tdlib-sys
+
+### Linux
+
+    sudo apt install gperf perl build-essential cmake libssl-dev libz3-dev
+    cargo build
+
+It should be possible to dynamically link on other platforms, but this is
+currently untested.
 
 ## Statically linked builds
 
@@ -30,3 +49,23 @@ This still requires standard build tools, and additionally the following to be
 installed:
 
  - `perl`
+
+### Get source
+
+    git clone https://github.com/nuxeh/tdlib-sys.git
+    cd tdlib-sys
+
+### Linux
+
+    sudo apt install gperf perl build-essential cmake
+    cargo build --features bundled_deps
+
+### OSX
+
+    brew install gperf perl
+    cargo build --features bundled_deps
+
+### Windows
+
+    vcpkg.exe install gperf:x86-windows
+    cargo build --features bundled_deps
