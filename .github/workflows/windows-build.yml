@@ -15,7 +15,7 @@ jobs:
         override: true
 
     - name: Install dependencies
-      run: vcpkg.exe install openssl:x86-windows zlib:x86-windows
+      run: vcpkg.exe install gperf:x86-windows
 
-    - name: Build
-      run: cargo build -vv
+    - name: Build static
+      run: cargo build -vv --feature bundled_deps

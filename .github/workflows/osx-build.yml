@@ -17,5 +17,5 @@ jobs:
     - name: Install dependencies
       run: brew install gperf
 
-    - name: Build
-      run: cargo build -vv
+    - name: Build static
+      run: cargo build -vv --feature bundled_deps

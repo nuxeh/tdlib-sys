@@ -13,3 +13,10 @@ development libraries:
 
  - `libssl`
  - `libz`
+
+# Statically linked builds
+
+The feature `bundled_deps` can be used on any platform to use `zlib` and
+`openssl` bundled and build statically by the respective `sys` crate.
+
+This is an easy solution for building on Windows and OSX.
