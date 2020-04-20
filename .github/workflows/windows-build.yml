@@ -19,5 +19,5 @@ jobs:
 
     - name: Build static
       run: |
-        echo "::add-path::/vcpkg/packages/gperf_x86-windows/tools/"
+        echo "::add-path::/vcpkg/packages/gperf_x86-windows/tools/gperf.exe"
         cargo build -vv --features bundled_deps
