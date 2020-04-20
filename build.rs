@@ -19,6 +19,11 @@ fn main() {
     cfg.register_dep("openssl");
     cfg.register_dep("z");
 
+    // Above isn't enough to build on Windows
+    if let Ok(path) = env::var("DEP_Z_INCLUDE") {
+        cfg.define("ZLIB_INCLUDE_DIR", path);
+    }
+
     // Specify path to gperf if specified in the environment
     if let Ok(path) = gperf_path {
         cfg.define("GPERF_EXECUTABLE:FILEPATH", path);
