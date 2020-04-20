@@ -6,3 +6,9 @@ edition = "2018"
 
 [build-dependencies]
 cmake = "0.1.42"
+itertools = "0.9.0"
+
+[dependencies]
+openssl-sys = "0.9.55"
+libz-sys = { version = "1.0.25", features = ["static"] }
+#libz-sys = "1.0.25"
