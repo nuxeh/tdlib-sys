@@ -14,9 +14,19 @@ development libraries:
  - `libssl`
  - `libz`
 
-# Statically linked builds
+Build tools required:
+
+ - `Cmake`
+
+## Statically linked builds
 
 The feature `bundled_deps` can be used on any platform to use `zlib` and
 `openssl` bundled and build statically by the respective `sys` crate.
 
-This is an easy solution for building on Windows and OSX.
+This does not require the installation of either of the dependencies on the
+host system, so is an easy solution for building on Windows and OSX.
+
+This still requires standard build tools, and additionally the following to be
+installed:
+
+ - `perl`
