@@ -14,5 +14,8 @@ jobs:
         toolchain: stable
         override: true
 
+    - name: Install dependencies
+      run: vcpkg.exe install openssl:x86-windows zlib:x86-windows
+
     - name: Build
-      run: cargo build --verbose
+      run: cargo build -vv
