@@ -65,6 +65,7 @@ fn install(src: &Path, dst: &Path, name: &str) {
     let from = src.join(name);
     let to = dst.join(name);
     fs::copy(&from, &to).expect("copy failed");
+    println!("installing {}", to.display());
 }
 
 /// Clean the source tree, otherwise the tarball fails Cargo's validation.
