@@ -6,8 +6,9 @@ use glob::glob;
 
 fn main() {
     let dst = PathBuf::from(env::var("OUT_DIR").unwrap());
-    let dst_lib = dst.join("lib");
     let dst_build = dst.join("build");
+    let dst_include = dst.join("include");
+    let dst_lib = dst.join("lib");
 
     let gperf_path = env::var("TDLIB_GPERF_PATH")
         .map(PathBuf::from);
@@ -34,52 +35,42 @@ fn main() {
     // Build
     cfg.build();
 
+    // Create output directories
+    fs::create_dir_all(&dst_lib).unwrap();
+    fs::create_dir_all(&dst_include).unwrap();
+
     // Copy required files out of the source tree. You might think this is
     // possible by running a Cmake install target after a partial build, but
     // no, that causes a complete build of all targets
-    install(&dst_build, &dst_lib, "tdjson_static");
-
-    export_headers(&dst);
+    install(&dst_build, &dst_lib, "tdjson_static*");
+    install(&PathBuf::from("td/td/telegram/"), &dst_include, "td_json_client.h");
+    install(&dst_build, &dst_include, "tdjson_export.h");
 
     // Static linking instructions
     println!("cargo:rustc-link-search=native={}", dst_lib.display());
     println!("cargo:rustc-link-lib=static=tdjson_static");
 
-    clean();
+    // Root and include instrucitons for accessing headers in dependent libs
+    println!("cargo:root={}", dst.to_str().unwrap());
+    println!("cargo:include={}", dst.join("include").display());
+
+    //clean();
 }
 
 /// Search for a file and copy it, since we don't necessarily know the file
 /// extension of the library we want on any given platform.
 fn install(src: &Path, dst: &Path, name: &str) {
-    let glob_string = format!("{}/**/{}*", src.display(), name);
+    let glob_string = format!("{}/{}", src.display(), name);
 
     glob(&glob_string)
         .expect("bad glob pattern")
         .filter_map(Result::ok)
         .filter(|p| p.is_file())
 	.for_each(|found_path| {
+            println!("copying {:?}", found_path);
             let file_name = found_path.file_name().expect("can't get file name");
             fs::copy(&found_path, dst.join(&file_name)).unwrap();
         });
-}
-
-/// Expose headers to any dependent crates
-fn export_headers(dst: &Path) {
-    let dst_include = dst.join("include/td/telegram");
-
-    fs::create_dir_all(&dst_include).unwrap();
-
-    fs::copy(
-        "td/td/telegram/td_json_client.h",
-        dst.join("include/td_json_client.h")
-    ).expect("failed to copy header");
-    fs::copy(
-        dst.join("build/td/telegram/tdjson_export.h"),
-        dst_include.join("tdjson_export.h")
-    ).expect("failed to copy header");
-
-    println!("cargo:root={}", dst.to_str().unwrap());
-    println!("cargo:include={}", dst.join("include").display());
 }
 
 /// Clean the source tree, otherwise the tarball fails Cargo's validation.
