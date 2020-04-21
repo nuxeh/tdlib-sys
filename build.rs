@@ -38,6 +38,7 @@ fn main() {
     println!("cargo:rustc-link-lib=static=tdjson_static");
 
     export_headers(&dst);
+    clean_tree();
 }
 
 fn export_headers(dst: &Path) {
@@ -56,4 +57,10 @@ fn export_headers(dst: &Path) {
 
     println!("cargo:root={}", dst.to_str().unwrap());
     println!("cargo:include={}", dst.join("include").display());
+}
+
+fn clean_tree() {
+    let mut cfg = Config::new("td");
+    cfg.build_target("clean");
+    cfg.build();
 }
