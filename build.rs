@@ -42,23 +42,21 @@ fn main() {
     // Copy required files out of the source tree. You might think this is
     // possible by running a Cmake install target after a partial build, but
     // no, that causes a complete build of all targets
-    install(&dst_build, &dst_lib, "tdjson_static*");
     install(&PathBuf::from("td/td/telegram/"), &dst_include, "td_json_client.h");
     install(&dst_build, &dst_include, "tdjson_export.h");
 
     // Static linking instructions
-    println!("cargo:rustc-link-search=native={}", dst_lib.display());
+    println!("cargo:rustc-link-search=native={}", dst_build.display());
     println!("cargo:rustc-link-lib=static=tdjson_static");
 
     // Root and include instrucitons for accessing headers in dependent libs
     println!("cargo:root={}", dst.to_str().unwrap());
-    println!("cargo:include={}", dst.join("include").display());
+    println!("cargo:include={}", dst_include.display());
 
-    //clean();
+    clean();
 }
 
-/// Search for a file and copy it, since we don't necessarily know the file
-/// extension of the library we want on any given platform.
+/// Search for a file and copy it
 fn install(src: &Path, dst: &Path, name: &str) {
     let glob_string = format!("{}/{}", src.display(), name);
 
@@ -66,7 +64,7 @@ fn install(src: &Path, dst: &Path, name: &str) {
         .expect("bad glob pattern")
         .filter_map(Result::ok)
         .filter(|p| p.is_file())
-	.for_each(|found_path| {
+        .for_each(|found_path| {
             println!("copying {:?}", found_path);
             let file_name = found_path.file_name().expect("can't get file name");
             fs::copy(&found_path, dst.join(&file_name)).unwrap();
@@ -75,7 +73,5 @@ fn install(src: &Path, dst: &Path, name: &str) {
 
 /// Clean the source tree, otherwise the tarball fails Cargo's validation.
 fn clean() {
-    Config::new("td")
-        .build_target("clean")
-        .build();
+
 }
