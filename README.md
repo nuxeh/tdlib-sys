@@ -16,7 +16,7 @@ development libraries:
 
 Standard build tools are required, and additionally:
 
- - `Cmake`
+ - `cmake`
 
 All build instructions below for OSX and Windows are currently only tested on
 Github workflows, if you find something more accurate for a normal system,
@@ -39,8 +39,8 @@ currently untested.
 
 ## Statically linked builds
 
-The feature `bundled_deps` can be used on any platform to use `zlib` and
-`openssl` bundled and build statically by the respective `sys` crate.
+The crate feature `bundled_deps` can be used on any platform to use `zlib` and
+`openssl` built statically by their respective `sys` crates.
 
 This does not require the installation of either of the dependencies on the
 host system, so is an easy solution for building on Windows and OSX.
