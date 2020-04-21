@@ -44,10 +44,14 @@ fn main() {
     // that causes a complete build of all targets, and takes a long time
     install(
         &PathBuf::from("td/td/telegram"),
-        &dst_include.join("td/td/telegram"),
+        &dst_include,
         "td_json_client.h"
     );
-    install(&dst_build, &dst_include, "tdjson_export.h");
+    install(
+        &dst_build.join("td/telegram"),
+        &dst_include.join("td/telegram"),
+        "tdjson_export.h"
+    );
 
     // Static linking instructions
     println!("cargo:rustc-link-search=native={}", dst_build.display());
@@ -64,7 +68,8 @@ fn main() {
 fn install(src: &Path, dst: &Path, name: &str) {
     let from = src.join(name);
     let to = dst.join(name);
-    fs::copy(&from, &to).expect("copy failed");
+    fs::create_dir_all(dst).unwrap();
+    fs::copy(&from, &to).unwrap();
     println!("installing {}", to.display());
 }
 
@@ -77,7 +82,6 @@ fn clean() {
         .filter(|p| p.is_dir() && p.ends_with("auto"))
         .for_each(|dir| {
             println!("cleaning {}", dir.display());
-            fs::remove_dir_all(&dir)
-                .expect("error deleting file");
+            fs::remove_dir_all(&dir).unwrap()
         });
 }
