@@ -19,3 +19,6 @@ tdlib-sys = { version = "*", path = "../" }
 
 [build-dependencies]
 bindgen = "0.53.2"
+
+[features]
+bundled_deps = ["tdlib-sys/bundled_deps"]

@@ -1,0 +1,30 @@
+
+name: bindgen
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v1
+
+    - uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        override: true
+
+    - name: Install static dependencies
+      run: sudo apt install gperf
+
+    - name: Build static
+      run: cargo build -vv --features bundled_deps
+      working-directory: ./tdlib-bindgen
+
+    - name: Install dynamic dependencies
+      run: sudo apt install gperf libz3-dev libssl-dev
+
+    - name: Build dynamic
+      run: cargo build -vv
+      working-directory: ./tdlib-bindgen
