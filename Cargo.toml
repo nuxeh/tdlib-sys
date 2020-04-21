@@ -17,6 +17,7 @@ exclude = [
 [build-dependencies]
 cmake = "0.1.42"
 glob = "0.3.0"
+walkdir = "2.3.1"
 
 [dependencies]
 libz-sys = "1.0.25"

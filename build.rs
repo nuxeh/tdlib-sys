@@ -3,6 +3,7 @@ use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 use glob::glob;
+use walkdir::WalkDir;
 
 fn main() {
     let dst = PathBuf::from(env::var("OUT_DIR").unwrap());
@@ -73,5 +74,14 @@ fn install(src: &Path, dst: &Path, name: &str) {
 
 /// Clean the source tree, otherwise the tarball fails Cargo's validation.
 fn clean() {
-
+    WalkDir::new("td")
+        .into_iter()
+        .filter_map(Result::ok)
+        .map(|e| e.into_path())
+        .filter(|p| p.is_dir() && p.ends_with("auto"))
+        .for_each(|dir| {
+            println!("cleaning {}", dir.display());
+            fs::remove_dir_all(&dir)
+                .expect("error deleting file");
+        });
 }
