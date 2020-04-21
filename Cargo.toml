@@ -1,9 +1,9 @@
 [package]
 name = "tdlib-sys"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Ed Cragg <drq.11235@gmail.com>"]
-repository = "https://github.com/nuxeh/gperf-sys"
-description = "Sys crate for Telegram's TDLib"
+repository = "https://github.com/nuxeh/tdlib-sys"
+description = "Sys crate for Telegram's TDLib client library."
 edition = "2018"
 license = "ISC"
 readme = "README.md"
