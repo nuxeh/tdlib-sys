@@ -16,6 +16,7 @@ exclude = [
 
 [build-dependencies]
 cmake = "0.1.42"
+glob = "0.3.0"
 
 [dependencies]
 libz-sys = "1.0.25"
